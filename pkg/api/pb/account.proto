@@ -1,0 +1,132 @@
+syntax = "proto3";
+
+package account;
+
+option go_package = "./pkg/account/pb";
+
+service AccountService {
+  rpc CreateAccount(CreateAccountRequest) returns (CreateAccountResponse) {}
+  rpc FindAccount(FindAccountRequest) returns (FindAccountResponse) {}
+  rpc UpdateAccount(UpdateAccountRequest) returns (UpdateAccountResponse) {}
+  rpc DeleteAccount(DeleteAccountRequest) returns (DeleteAccountResponse) {} 
+  rpc GetAccounts(GetAccountsRequest) returns (GetAccountsResponse) {}
+  rpc GetBalance(GetBalanceRequest) returns (GetBalanceResponse) {}
+  rpc GetTransactions(GetTransactionsRequest) returns (GetTransactionsResponse) {}
+  rpc GetTransferredTransactions(GetTransferredTransactionsRequest) returns (GetTransferredTransactionsResponse) {}
+}
+
+// CreateProduct
+
+message CreateAccountRequest {
+  string account_holder = 1;
+  string type = 2;
+  int64 balance = 3;
+  int64 user_id = 4;
+}
+
+message CreateAccountResponse {
+  int64 status = 1;
+  string error = 2;
+  int64 id = 3;
+}
+
+// FindAccount
+
+message FindAccountData {
+  int64 id = 1;
+  string accountHolder = 2;
+  int64 account_number = 3;
+  int64 user_id = 4;
+  string created_at = 5;
+  string type = 6;
+}
+
+message FindAccountRequest { int64 id = 1; }
+
+message FindAccountResponse {
+  int64 status = 1;
+  string error = 2;
+  FindAccountData data = 3;
+}
+
+// Update Account
+
+message UpdateAccountRequest {
+    int64 id = 1;
+    string type = 2;
+    int64 balance = 3;
+  }
+
+message UpdateAccountResponse {
+    int64 status = 1;
+    string error = 2;
+    int64 id = 3;
+  }
+ 
+// Delete Account
+
+message DeleteAccountRequest { int64 id = 1; }
+
+message DeleteAccountResponse {
+  int64 status = 1;
+  string error = 2;
+  int64 id = 3;
+}
+
+// GetAccounts
+
+message GetAccountsRequest { int64 id = 1; }
+message GetAccountsResponse {
+  int64 status = 1;
+  string error = 2;
+  repeated FindAccountData accounts = 3;
+}
+
+message AccountData {
+    int64 id = 1;
+    string accountHolder = 2;
+    int64 account_number = 3;
+    int64 user_id = 4;
+    string created_at = 5;
+  }
+
+// GetBalance
+
+message GetBalanceRequest { int64 id = 1; }
+
+message GetBalanceResponse {
+  int64 status = 1;
+  string error = 2;
+  int64 balance = 3;
+}
+
+// GetAllTransactions
+
+message TransactionData {
+    int64 id = 1;
+    string type = 2;
+    int64 amount = 3;
+    int64 transferred_from = 4;
+    int64 balance_after = 5;
+    int64 balance_before = 6;
+    string created_at = 7;
+  }
+
+message GetTransactionsRequest { int64 id = 1; }
+
+message GetTransactionsResponse {
+    int64 status = 1;
+    string error = 2;
+    repeated TransactionData transactions = 3;
+}
+
+// Get TransferredTransactions
+
+message GetTransferredTransactionsRequest { int64 id = 1; }
+
+message GetTransferredTransactionsResponse {
+    int64 status = 1;
+    string error = 2;
+    repeated TransactionData transactions = 3;
+}
+
